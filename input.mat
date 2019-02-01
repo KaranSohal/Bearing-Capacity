@@ -1,0 +1,60 @@
+# name: phi
+# type: scalar
+30
+
+
+# name: cohesion
+# type: scalar
+4
+
+% gamma in kN/m^3
+
+# name: gamma
+# type: scalar
+20
+
+
+% depth_of_footing 
+% Df in meter
+# name: Df
+# type: scalar
+3
+
+
+% length_of_footing
+% L in meter 
+# name: L
+# type: scalar
+4
+
+% width_of_footing 
+% Wf in meter
+# name: Wf
+# type: scalar
+2
+
+% depth_of_water_table
+% Dw in meter 
+# name: Dw
+# type: scalar
+5
+
+
+
+# name: alpha
+# type: scalar
+0
+
+
+%% 1_for_rectangular
+%% 2_for_square
+%% 3_for_strip
+%% 4_for_circle
+
+
+# name: shape
+# type: scalar
+4
+
+
+
