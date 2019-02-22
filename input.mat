@@ -2,42 +2,40 @@
 # type: scalar
 30
 
-
 # name: cohesion
 # type: scalar
-4
+0
 
-% gamma in kN/m^3
-
+%% gamma in kN/m^3
 # name: gamma
 # type: scalar
-20
+16.10
 
 
 % depth_of_footing 
 % Df in meter
 # name: Df
 # type: scalar
-3
+1.5
 
 
 % length_of_footing
 % L in meter 
 # name: L
 # type: scalar
-4
+2.5
 
 % width_of_footing 
 % Wf in meter
 # name: Wf
 # type: scalar
-2
+2.5
 
 % depth_of_water_table
 % Dw in meter 
 # name: Dw
 # type: scalar
-5
+9
 
 
 
@@ -54,7 +52,11 @@
 
 # name: shape
 # type: scalar
-4
+3
 
+%% Factor of Safety
+# name: FOS
+# type: scalar
+2.5
 
 
