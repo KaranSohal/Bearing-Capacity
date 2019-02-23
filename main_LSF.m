@@ -38,7 +38,12 @@ endif
 % inclination factors
 ic=(1-(alpha/90))^2;
 iq=(1-(alpha/90))^2;
-ig=(1-(alpha/phiPrime))^2;
+
+if (phi==0)
+  ig=1
+else
+  ig=(1-(alpha/phiPrime))^2;
+endif
 
 %shape factors
 %% case_1_for_rectangular
