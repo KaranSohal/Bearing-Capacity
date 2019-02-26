@@ -21,6 +21,7 @@
 
 % length_of_footing
 % L in meter 
+% for strip footing put Length as 1
 # name: L
 # type: scalar
 2.5
@@ -33,10 +34,10 @@
 
 % depth_of_water_table
 % Dw in meter 
+% if ground water is not encountered during test use it as 100
 # name: Dw
 # type: scalar
 9
-
 
 
 # name: alpha
@@ -48,15 +49,44 @@
 %% 2_for_square
 %% 3_for_strip
 %% 4_for_circle
-
-
 # name: shape
 # type: scalar
-3
+2
 
 %% Factor of Safety
 # name: FOS
 # type: scalar
 2.5
 
+%% gamma at Water level in kN/m^3
+%% if water table not encountered during investigation use gamma of maximum depth 
+# name: gamma_Dw
+# type: scalar
+16.40
+
+% Number of observations  
+# name: n
+# type: scalar
+8
+
+
+%% Input Data for N vale and depth
+%% Sr.no Depth N_observed Bulk_density
+# name: spt
+# type: matrix
+# rows: 8
+# columns: 4
+1 1.0 3 16
+2 1.5 5 16.10
+3 3.0 8 16.30
+4 4.5 10 16.40
+5 6.0 12 16.40
+6 7.5 14 16.40
+7 9.0 15 16.40
+8 10.5 16 16.40
+
+%% Permissable Settlement in m
+# name: S
+# type: scalar
+0.04
 

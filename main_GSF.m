@@ -1,4 +1,4 @@
-% To calculate Bearing Capacity of Soil as per IS Code against Local Shear Failure.
+% To calculate Bearing Capacity of Soil as per IS Code against Genral Shear Failure.
 clc;
 clear;
 
@@ -6,24 +6,23 @@ clear;
 load data.mat
 load input.mat
 
-disp('Bearing Capacity Based on Shear Considerations against Local Shear Failure')
+
+disp('Bearing Capacity Based on Shear Considerations against Genral Shear Failure ')
 disp('AS per I.S.Code - 6403:1981')
 fprintf('\n');
 % Bearing_Capacity_Factors
-phiPrime= atand((2/3)*tand(phi));
-NcPrime= interp1(Bearing_Capacity_Factors(:,1),Bearing_Capacity_Factors(:,2),phiPrime);
-NqPrime= interp1(Bearing_Capacity_Factors(:,1),Bearing_Capacity_Factors(:,3),phiPrime);
-NgPrime= interp1(Bearing_Capacity_Factors(:,1),Bearing_Capacity_Factors(:,4),phiPrime);
-
+Nc= interp1(Bearing_Capacity_Factors(:,1),Bearing_Capacity_Factors(:,2),phi);
+Nq= interp1(Bearing_Capacity_Factors(:,1),Bearing_Capacity_Factors(:,3),phi);
+Ng= interp1(Bearing_Capacity_Factors(:,1),Bearing_Capacity_Factors(:,4),phi);
 
 % Depth_factors
-Dc= 1+(0.2*(Df/Wf)*tand(45+phiPrime/2));
-if (phiPrime<10)
+Dc= 1+(0.2*(Df/Wf)*tand(45+phi/2));
+if (phi<10)
   Dq = 1;
   Dg = 1;
-elseif (phiPrime>10)
-  Dq= 1+(0.1*(Df/Wf)*tand(45+phiPrime/2));
-  Dg= 1+(0.1*(Df/Wf)*tand(45+phiPrime/2));
+elseif (phi>10)
+  Dq= 1+(0.1*(Df/Wf)*tand(45+phi/2));
+  Dg= 1+(0.1*(Df/Wf)*tand(45+phi/2));
 endif
 
 % Water table correction factors
@@ -38,11 +37,10 @@ endif
 % inclination factors
 ic=(1-(alpha/90))^2;
 iq=(1-(alpha/90))^2;
-
 if (phi==0)
-  ig=1
+  ig=1;
 else
-  ig=(1-(alpha/phiPrime))^2;
+  ig=(1-(alpha/phi))^2;
 endif
 
 %shape factors
@@ -79,18 +77,18 @@ if (Dw>=Df)
 % surcharge
 q=gamma*Df;
 % net ultimate bearing capacity for local shear failure
-net_ultimate_bearing_capacity= 0.67*cohesion*NcPrime*Sc*Dc*ic+ q*(NqPrime-1)*Sq*Dq*iq+ 0.5*gamma*Wf*NgPrime*Sg*Dg*ig*W;
+net_ultimate_bearing_capacity= cohesion*Nc*Sc*Dc*ic+ q*(Nq-1)*Sq*Dq*iq+ 0.5*gamma*Wf*Ng*Sg*Dg*ig*W;
 
 elseif (Dw<Df)
 % surcharge
 q= (gamma-10)*Df;
-% net ultimate bearing capacity for local shear failure
-net_ultimate_bearing_capacity= 0.67*cohesion*NcPrime*Sc*Dc*ic+ q*(NqPrime-1)*Sq*Dq*iq+ 0.5*gamma*Wf*NgPrime*Sg*Dg*ig*W;
+% net ultimate bearing capacity for genral shear failure
+net_ultimate_bearing_capacity= cohesion*Nc*Sc*Dc*ic+ q*(Nq-1)*Sq*Dq*iq+ 0.5*gamma*Wf*Ng*Sg*Dg*ig*W;
 endif
 
 safe_net_allowable_bearing_capacity= net_ultimate_bearing_capacity/FOS;
 
-%% output
+%% Output
 switch shape
   case 1
     %% rectangle
@@ -103,12 +101,12 @@ disp(['The least soil properties at the foundation level i.e. at ' num2str(Df) '
 disp(['    gamma = ' num2str(gamma) ' kN/m^3' ]);
 disp(['    c = ' num2str(cohesion) ' kN/m^2' ]);
 disp(['    phi = ' num2str(phi) ' degree' ]);
-disp(['    phi'' = ' num2str(phiPrime) ' degree' ]);
+
 printf('\n')
 disp(['Bearing Capacity factors are:'])
-disp(['    Nc'' = ' num2str(NcPrime) ]);
-disp(['    Nq'' = ' num2str(NqPrime) ]);
-disp(['    Ng'' = ' num2str(NgPrime) ]);
+disp(['    Nc'' = ' num2str(Nc) ]);
+disp(['    Nq'' = ' num2str(Nq) ]);
+disp(['    Ng'' = ' num2str(Ng) ]);
 printf('\n')
 disp(['Shape factors are:'])
 disp(['    Sc = ' num2str(Sc) ]);
@@ -143,12 +141,12 @@ disp(['The least soil properties at the foundation level i.e. at ' num2str(Df) '
 disp(['    gamma = ' num2str(gamma) ' kN/m^3' ]);
 disp(['    c = ' num2str(cohesion) ' kN/m^2' ]);
 disp(['    phi = ' num2str(phi) ' degree' ]);
-disp(['    phi'' = ' num2str(phiPrime) ' degree' ]);
+
 printf('\n')
 disp(['Bearing Capacity factors are:'])
-disp(['    Nc'' = ' num2str(NcPrime) ]);
-disp(['    Nq'' = ' num2str(NqPrime) ]);
-disp(['    Ng'' = ' num2str(NgPrime) ]);
+disp(['    Nc'' = ' num2str(Nc) ]);
+disp(['    Nq'' = ' num2str(Nq) ]);
+disp(['    Ng'' = ' num2str(Ng) ]);
 printf('\n')
 disp(['Shape factors are:'])
 disp(['    Sc = ' num2str(Sc) ]);
@@ -180,12 +178,12 @@ disp(['The least soil properties at the foundation level i.e. at ' num2str(Df) '
 disp(['    gamma = ' num2str(gamma) ' kN/m^3' ]);
 disp(['    c = ' num2str(cohesion) ' kN/m^2' ]);
 disp(['    phi = ' num2str(phi) ' degree' ]);
-disp(['    phi'' = ' num2str(phiPrime) ' degree' ]);
+
 printf('\n')
 disp(['Bearing Capacity factors are:'])
-disp(['    Nc'' = ' num2str(NcPrime) ]);
-disp(['    Nq'' = ' num2str(NqPrime) ]);
-disp(['    Ng'' = ' num2str(NgPrime) ]);
+disp(['    Nc'' = ' num2str(Nc) ]);
+disp(['    Nq'' = ' num2str(Nq) ]);
+disp(['    Ng'' = ' num2str(Ng) ]);
 printf('\n')
 disp(['Shape factors are:'])
 disp(['    Sc = ' num2str(Sc) ]);
@@ -217,12 +215,12 @@ disp(['The least soil properties at the foundation level i.e. at ' num2str(Df) '
 disp(['    gamma = ' num2str(gamma) ' kN/m^3' ]);
 disp(['    c = ' num2str(cohesion) ' kN/m^2' ]);
 disp(['    phi = ' num2str(phi) ' degree' ]);
-disp(['    phi'' = ' num2str(phiPrime) ' degree' ]);
+
 printf('\n')
 disp(['Bearing Capacity factors are:'])
-disp(['    Nc'' = ' num2str(NcPrime) ]);
-disp(['    Nq'' = ' num2str(NqPrime) ]);
-disp(['    Ng'' = ' num2str(NgPrime) ]);
+disp(['    Nc'' = ' num2str(Nc) ]);
+disp(['    Nq'' = ' num2str(Nq) ]);
+disp(['    Ng'' = ' num2str(Ng) ]);
 printf('\n')
 disp(['Shape factors are:'])
 disp(['    Sc = ' num2str(Sc) ]);
